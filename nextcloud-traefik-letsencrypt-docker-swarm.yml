@@ -135,8 +135,6 @@ services:
       # Nextcloud URL (replace with yours)
       NEXTCLOUD_TRUSTED_DOMAINS: nextcloud.heyvaldemar.net
       # Nextcloud URL (replace with yours)
-      TRUSTED_PROXIES: nextcloud.heyvaldemar.net
-      # Nextcloud URL (replace with yours)
       OVERWRITECLIURL: https://nextcloud.heyvaldemar.net
       OVERWRITEPROTOCOL: https
       # Nextcloud URL (replace with yours)
