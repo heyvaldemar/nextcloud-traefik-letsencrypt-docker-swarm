@@ -21,6 +21,23 @@
 # Deploy Nextcloud in a Docker Swarm using the command:
 # docker stack deploy -c nextcloud-traefik-letsencrypt-docker-swarm.yml nextcloud
 
+# # Background Jobs Using Cron
+# To ensure your Nextcloud instance operates efficiently, it's important to use the "Cron" method to execute background jobs. A dedicated Docker container has already been set up in your environment to handle these tasks.
+
+# ## Steps to Enable Cron:
+# 1. **Log in to Nextcloud as an Administrator.**
+# 2. Go to **Settings** (click on your user profile in the top right corner and select "Settings").
+# 3. In the **Administration** section on the left sidebar, select **Basic settings**.
+# 4. Scroll down to the **Background jobs** section.
+# 5. Select the **"Cron (Recommended)"** option.
+
+# ## Why Use Cron?
+# The "Cron" method ensures that background tasks, such as file indexing, notifications, and cleanup operations,
+# run at regular intervals independently of user activity. This method is more reliable and efficient than AJAX or Webcron,
+# particularly for larger or more active instances, as it does not depend on users accessing the site to trigger these tasks.
+# With the dedicated container in your setup, this method keeps your Nextcloud instance responsive
+# and in good healthby runningthese jobs consistently.
+
 # Author
 # I’m Vladimir Mikhalev, the Docker Captain, but my friends can call me Valdemar.
 # https://www.docker.com/captains/vladimir-mikhalev/
