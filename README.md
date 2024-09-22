@@ -46,6 +46,25 @@ To ensure your Nextcloud instance operates efficiently, it's important to use th
 
 The "Cron" method ensures that background tasks, such as file indexing, notifications, and cleanup operations, run at regular intervals independently of user activity. This method is more reliable and efficient than AJAX or Webcron, particularly for larger or more active instances, as it does not depend on users accessing the site to trigger these tasks. With the dedicated container in your setup, this method keeps your Nextcloud instance responsive and in good health by running these jobs consistently.
 
+# Fixing Database Index Issues
+
+Your Nextcloud database might be missing some indexes. This situation can occur because adding indexes to large tables can take considerable time, so they are not added automatically. Running `occ db:add-missing-indices` manually allows these indexes to be added while the instance continues running. Adding these indexes can significantly speed up queries on tables like `filecache` and `systemtag_object_mapping`, which might be missing indexes such as `fs_storage_path_prefix` and `systag_by_objectid`.
+
+List all running containers to find the one running Nextcloud:
+
+`docker ps`
+
+Run the command below, replacing `nextcloud-container-name` with your container's name. Adjust `33` to the correct user ID if different:
+
+`docker exec -u 33 -it nextcloud-container-name php occ db:add-missing-indices`
+
+Confirm the indices were added by checking the status:
+
+`docker exec -u 33 -it nextcloud-container-name php occ status`
+
+- Operations on large databases can take time; consider scheduling during low-usage periods.
+- Always backup your database before making changes.
+
 # Author
 
 I’m Vladimir Mikhalev, the [Docker Captain](https://www.docker.com/captains/vladimir-mikhalev/), but my friends can call me Valdemar.
