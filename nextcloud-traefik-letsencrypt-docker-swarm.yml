@@ -39,7 +39,9 @@
 # and in good healthby runningthese jobs consistently.
 
 # # Fixing Database Index Issues
-# Your Nextcloud database might be missing some indexes. This situation can occur because adding indexes to large tables can take considerable time, so they are not added automatically. Running `occ db:add-missing-indices` manually allows these indexes to be added while the instance continues running. Adding these indexes can significantly speed up queries on tables like `filecache` and `systemtag_object_mapping`, which might be missing indexes such as `fs_storage_path_prefix` and `systag_by_objectid`.
+# Your Nextcloud database might be missing some indexes. This situation can occur because adding indexes to large tables can take considerable time, so they are not added automatically.
+# Running `occ db:add-missing-indices` manually allows these indexes to be added while the instance continues running. Adding these indexes can significantly speed up
+# queries on tables like `filecache` and `systemtag_object_mapping`, which might be missing indexes such as `fs_storage_path_prefix` and `systag_by_objectid`.
 
 # List all running containers to find the one running Nextcloud:
 # `docker ps`
@@ -52,6 +54,22 @@
 
 # - Operations on large databases can take time; consider scheduling during low-usage periods.
 # - Always backup your database before making changes.
+
+# # Rescanning Files
+# When files are added directly to Nextcloud's data directory through methods other than the web interface or sync clients
+# (e.g., via FTP or direct server access), they are not automatically visible in the Nextcloud user interface.
+# This happens because these files bypass Nextcloud's normal indexing process.
+# To make all manually added files visible in the UI, you can use the `occ files:scan` command to update Nextcloud's file index.
+# This command should be used with care as it can impact server performance, especially on larger installations.
+
+# List all running containers to find the one running Nextcloud:
+# `docker ps`
+
+# Run the command below, replacing `nextcloud-container-name` with your container's name. Adjust `33` to the correct user ID if different:
+# `docker exec -u 33 -it nextcloud-container-name php occ files:scan --all`
+
+# - Be aware that this command can significantly affect performance during its execution. It is advisable to run this scan during periods of low user activity.
+# - Always ensure that you have up-to-date backups before performing any operations that affect the filesystem or database.
 
 # Author
 # I’m Vladimir Mikhalev, the Docker Captain, but my friends can call me Valdemar.
